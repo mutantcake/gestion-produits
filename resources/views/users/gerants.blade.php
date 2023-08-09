@@ -17,7 +17,11 @@
                         <th>No</th>
                         <th>Nom complet</th>
                         <th>Email</th>
+
+                        @if (auth()->user()->level == 'Admin')
                         <th>Action</th>
+                        @endif
+
                     </tr>
                 </thead>
                 <tbody>
@@ -27,9 +31,12 @@
                         <th>{{ $no++ }}</th>
                         <td>{{ $gerant->name }}</td>
                         <td>{{ $gerant->email }}</td>
+
+                        @if (auth()->user()->level == 'Admin')
                         <td>
                             <a href="{{ route('gerant.delete', $gerant->id) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce gestionnaire ?')">Supprimer</a>
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
