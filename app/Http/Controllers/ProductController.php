@@ -67,18 +67,46 @@ class ProductController extends Controller
 
      public function edit($id)
     {
+        $categories = $this->getCategories();
+
         $product = products::find($id);
 
-        return view('products.form', ['product' => $product]);
+        return view('products.form', compact('product','categories'));
     }
 
     public function update($id, Request $request)
     {
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $file = $request->file('image');
+
+            // Vérifier si le type de fichier est autorisé (PNG, JPEG ou JPG)
+            if ($file->getClientOriginalExtension() === 'png' ||
+                in_array($file->getClientOriginalExtension(), ['jpeg', 'jpg'])) {
+
+                // Générer un nom de fichier aléatoire pour éviter les conflits
+                $randomFileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
+
+                // Déplacer le fichier vers le dossier "public/images"
+                $file->move(public_path('images'), $randomFileName);
+
+                $filepath = 'images/' . $randomFileName;
+                
+            } 
+        } 
+
+        if (!isset($filepath)) {
+            $product= products::find($request->id);
+            $filepath= $product->image;
+          }
+
         $data = [
             'item_code' => $request->item_code,
             'productname' => $request->productname,
-            'category' => $request->id_category,
-            'price' => $request->price
+            'categoryId' => $request->categoryId,
+            'price' => $request->price,
+            'details' => $request->details,
+            'image' => $filepath,
         ];
 
         products::find($id)->update($data);
@@ -92,4 +120,12 @@ class ProductController extends Controller
 
         return redirect()->route('products');
     }
+
+    public function showDetails($id)
+{
+    $product = Products::findOrFail($id);
+
+    return view('products.product_details', compact('product'));
+}
+
 }

@@ -21,7 +21,7 @@ class CheckAdminLevel
         }
 
         // Rediriger l'utilisateur vers une autre page ou renvoyer une réponse d'erreur
-        return redirect()->route('dashboard')->with('error', 'Vous n\'avez pas la permission d\'ajouter un manager.');
+        return redirect()->back()->with('error', 'Désolé ! Seul l\'administrateur peut effectuer cette operation.');
     
     }
 }

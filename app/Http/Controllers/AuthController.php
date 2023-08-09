@@ -26,9 +26,9 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'level' => 'Admin',
+            'level' => 'Gerant',
         ]);
-        return redirect()->route('login');
+        return redirect()->route('gerants.index');
     }
 
     public function login()

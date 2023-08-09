@@ -1,29 +1,25 @@
 @extends('layouts.app')
 
-@section('title', 'Data product')
+@section('title', 'Liste des Produits')
 
 @section('contents')
     <div class="card shadow mb-4">
         <div  class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Data product</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Liste des produits</h6>
         </div>
         <div class="card-body">
-                @if (auth()->user()->level == 'Admin')
-            <a href="{{ route('products.add') }}" class="btn btn-primary mb-3">Add product</a>
-                @endif
+            <a href="{{ route('products.add') }}" class="btn btn-primary mb-3">Ajouter un produit</a>
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>images</th>
-                            <th>Code product</th>
-                            <th>Name product</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                                    @if (auth()->user()->level == 'Admin')
+                            <th>Image</th>
+                            <th>Code du produit</th>
+                            <th>Nom</th>
+                            <th>Catégorie</th>
+                            <th>Prix</th>
                             <th>Action</th>
-                                    @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -36,13 +32,13 @@
                             <td>{{ $row->productname }}</td>
                             <td>{{ $row->category->name }}</td>
                             <td>{{ $row->price }}</td>
-                                        @if (auth()->user()->level == 'Admin')
-                            <td>
-                                <a href="{{ route('products.edit', $row->id) }}" class="btn btn-warning">Edit</a>
-                                <a href="{{ route('products.delete', $row->id) }}" class="btn btn-danger">Delete</a>
-                                <a href="" class="btn btn-primary">Détails</a>
+                        
+                            <td>                                
+                                <a href="{{ route('products.details', $row->id) }}" class="btn btn-primary">Détails</a>
+                                <a href="{{ route('products.edit', $row->id) }}" class="btn btn-warning">Modifier</a>
+                                <a href="{{ route('products.delete', $row->id) }}" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')" >Supprimer</a>
                             </td>
-                                        @endif
+                                        
                         </tr>
                     @endforeach
                     </tbody>

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Register</title>
+    <title>Ajout de gerant</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('https://startbootstrap.github.io/startbootstrap-sb-admin-2/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -30,24 +30,23 @@
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-                    <div class="col-lg-7">
+                    <div class="col-lg-7 mx-auto">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Ajouter un manager!</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Ajouter un gerant !</h1>
                             </div>
                             <form action="{{ route('register.save') }}" method="POST" class="user">
                                 @csrf
                                 <div class="form-group">
                                     <input name="name" type="text" class="form-control form-control-user @error('name')is-invalid @enderror" id="exampleFirstName"
-                                        placeholder="First Name">
+                                        placeholder="Nom complet">
                                     @error('name')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <input name="email" type="email" class="form-control form-control-user @error('email')is-invalid @enderror" id="exampleInputEmail"
-                                        placeholder="Email Address">
+                                        placeholder="Adresse Email">
                                     @error('email')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -55,14 +54,14 @@
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input name="password" type="password" class="form-control form-control-user @error('password')is-invalid @enderror"
-                                            id="exampleInputPassword" placeholder="Password">
+                                            id="exampleInputPassword" placeholder="Mot de passe">
                                     @error('password')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                     </div>
                                     <div class="col-sm-6">
                                         <input name="password_confirmation" type="password" class="form-control form-control-user @error('password_confirmation')is-invalid @enderror"
-                                            id="exampleRepeatPassword" placeholder="Repeat Password">
+                                            id="exampleRepeatPassword" placeholder="Repetez le mot de passe">
                                     @error('password_confirmation')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -71,14 +70,15 @@
                                 <button type="submit" class="btn btn-primary btn-user btn-block">
                                     Ajouter
                                 </button>
+
+                                <a type="submit" class="btn btn-warning btn-user btn-block" href="{{ route('products') }}">
+                                    Annuler
+                                </a>
                                 
                                 
                             </form>
                             <hr>
-                        
-                            <div class="text-center">
-                                <a class="small" href="{{ route('dashboard') }}">Annuler!</a>
-                            </div>
+        
                         </div>
                     </div>
                 </div>

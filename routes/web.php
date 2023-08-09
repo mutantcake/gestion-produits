@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\GerantController;
+use App\Models\Products;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,16 +25,14 @@ Route::controller(AuthController::class)->group(function (){
     Route::get('inscription', 'index')->middleware(['auth', 'admin'])->name('register');
     Route::post('register', 'registerSave')->name('register.save');
 
-    Route::get('login', 'login')->name('login');
+    Route::get('login', 'login')->middleware('guest')->name('login');
     Route::post('login', 'loginAction')->name('login.action');
 
     Route::get('logout', 'logout')->middleware('auth')->name('logout');
 });
 
 Route::middleware('auth')->group(function (){
-    Route::get('/', function (){
-        return view('dashboard');
-    })->name('dashboard');
+    Route::permanentRedirect('/', '/products')->name('dashboard');
 
     Route::controller(ProductController::class)->prefix('products')->group(function () {
         Route::get('', 'accueil')->name('products');
@@ -53,3 +53,11 @@ Route::middleware('auth')->group(function (){
         Route::get('delete/{id}', 'delete')->name('category.delete');
     });
 });
+
+Route::permanentRedirect('/home', '/products');
+
+Route::get('/products/{id}', [ProductController::class, 'showDetails'])->name('products.details');
+
+Route::get('/gerants', [GerantController::class, 'index'])->name('gerants.index');
+Route::get('/gerant/delete/{id}', [GerantController::class, 'delete'])->middleware(['auth', 'admin'])->name('gerant.delete');
+
